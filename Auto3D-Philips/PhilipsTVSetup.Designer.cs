@@ -39,6 +39,7 @@
       this.comboBoxInterface = new System.Windows.Forms.ComboBox();
       this.label4 = new System.Windows.Forms.Label();
       this.btnCheckConnection = new System.Windows.Forms.Button();
+      this._tvModel = new MediaPortal.UserInterface.Controls.MPLabel();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
       this.SuspendLayout();
       // 
@@ -118,8 +119,9 @@
       this.comboBoxInterface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.comboBoxInterface.FormattingEnabled = true;
       this.comboBoxInterface.Items.AddRange(new object[] {
-            "jointSpace\t",
-            "DirectFB"});
+      "jointSpace\t v1",
+      "jointSpace\t v5",
+      "DirectFB"});
       this.comboBoxInterface.Location = new System.Drawing.Point(0, 65);
       this.comboBoxInterface.Name = "comboBoxInterface";
       this.comboBoxInterface.Size = new System.Drawing.Size(144, 21);
@@ -145,10 +147,20 @@
       this.btnCheckConnection.UseVisualStyleBackColor = true;
       this.btnCheckConnection.Click += new System.EventHandler(this.btnCheckConnection_Click);
       // 
+      // _tvModel
+      // 
+      this._tvModel.AutoEllipsis = true;
+      this._tvModel.Location = new System.Drawing.Point(299, 158);
+      this._tvModel.Name = "_tvModel";
+      this._tvModel.Size = new System.Drawing.Size(222, 56);
+      this._tvModel.TabIndex = 40;
+      this._tvModel.Text = "TV model: TV is off";
+      // 
       // PhilipsTVSetup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._tvModel);
       this.Controls.Add(this.btnCheckConnection);
       this.Controls.Add(this.label4);
       this.Controls.Add(this.comboBoxInterface);
@@ -180,5 +192,6 @@
         private System.Windows.Forms.ComboBox comboBoxInterface;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnCheckConnection;
+        private UserInterface.Controls.MPLabel _tvModel;
     }
 }
