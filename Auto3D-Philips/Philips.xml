@@ -125,16 +125,8 @@
           <Command>Back</Command>
         </Commands3DTAB2D>
         <Commands2D3D>
-          <Command>3D</Command>
-          <Command>CursorDown</Command>
-          <Command>CursorDown</Command>
-          <Command>CursorDown</Command>
-          <Command>OK</Command>
         </Commands2D3D>
         <Commands3D2D>
-          <Command>Options</Command>
-          <Command>CursorDown</Command>
-          <Command>CursorDown</Command>
         </Commands3D2D>
       </CommandLists>
     </Model>

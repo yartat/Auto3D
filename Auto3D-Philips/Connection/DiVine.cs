@@ -283,9 +283,15 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
       byte[] buffer = Encoding.ASCII.GetBytes(data);
       int timeout = 120;
 
-      PingReply reply = pingSender.Send(ipAddress, timeout, buffer, options);
+        try
+        {
+          PingReply reply = pingSender.Send(ipAddress, timeout, buffer, options);
 
-      return reply.Status == IPStatus.Success;
+          return reply.Status == IPStatus.Success;
+        }
+        catch (Exception) { }
+
+        return false;
     }
 
     public static bool Init(String ipAddress)

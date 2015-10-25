@@ -11,6 +11,8 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
 {
     public abstract class JointSpaceBaseAdapter : IPhilipsTVAdapter
     {
+        private const string ContentType = "application/json; charset=UTF-8";
+
         protected string Host { get; set; }
 
         public virtual bool SendCommand(string command)
@@ -54,7 +56,7 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Timeout = 3000;
-                request.ContentType = "application/json; charset=UTF-8";
+                request.ContentType = ContentType;
                 request.Method = "POST";
 
                 var jsonString = JsonConvert.SerializeObject(key, Formatting.Indented);
@@ -70,14 +72,14 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
                 Application.DoEvents();
                 Thread.Sleep(50);
 
-                var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var httpResponse = (HttpWebResponse)request.GetResponse())
                 {
-                    var result = streamReader.ReadToEnd();
-                    Log.Debug(result);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        Log.Debug(result);
+                    }
                 }
-
-                httpResponse.Close();
 
                 Application.DoEvents();
             }
@@ -101,8 +103,8 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 request.Timeout = 3000;
-                request.ContentType = "application/json; charset=UTF-8";
-                request.Accept = "application/json; charset=UTF-8";
+                request.ContentType = ContentType;
+                request.Accept = ContentType;
                 request.Method = "GET";
 
                 if (!string.IsNullOrEmpty(jsonString))
@@ -120,21 +122,21 @@ namespace MediaPortal.ProcessPlugins.Auto3D.Devices
                 Application.DoEvents();
                 Thread.Sleep(50);
 
-                var httpResponse = (HttpWebResponse)request.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var httpResponse = (HttpWebResponse)request.GetResponse())
                 {
-                    result = streamReader.ReadToEnd();
-                    Log.Debug(result);
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        result = streamReader.ReadToEnd();
+                        Log.Debug(result);
+                    }
                 }
-
-                httpResponse.Close();
 
                 Application.DoEvents();
             }
             catch (Exception ex)
             {
-                Log.Info("Auto3D: PostRequest: " + ex.Message);
-                Auto3DHelpers.ShowAuto3DMessage("Command to TV could not be sent: " + ex.Message, false, 0);
+                Log.Info("Auto3D: GetRequest: " + ex.Message);
+                Auto3DHelpers.ShowAuto3DMessage("Request to TV could not be sent: " + ex.Message, false, 0);
                 result = string.Empty;
             }
 
