@@ -50,8 +50,7 @@ namespace MediaPortal.ProcessPlugins.Auto3D
     Keys _menuHotKey = Keys.D;
 
     bool bMenuMCERemote = false;
-    String mceRemoteKey;
-
+    
     bool bSuppressSwitchBackTo2D = false;
     bool bConvert3DTo2D = false;
 
@@ -111,11 +110,10 @@ namespace MediaPortal.ProcessPlugins.Auto3D
             }
           }
         }
-      }     
+      }
     }
 
-    // Returns the name of the plugin which is shown in the plugin menu
-
+   // Returns the name of the plugin which is shown in the plugin menu
     public string PluginName()
     {
       return "Auto3D";
@@ -207,26 +205,17 @@ namespace MediaPortal.ProcessPlugins.Auto3D
         b3DMenuOnKey = reader.GetValueAsBool("Auto3DPlugin", "3DMenuOnKey", false);
         String menuHotKey = reader.GetValueAsString("Auto3DPlugin", "3DMenuKey", "CTRL + D");
 
-        if (menuHotKey.StartsWith("MCE"))
-        {
-          bMenuMCERemote = true;
-          mceRemoteKey = menuHotKey.Substring(4);
-          MediaPortal.Hardware.Remote.Click += new MediaPortal.Hardware.RemoteEventHandler(OnRemoteClick);
-        }
-        else
-        {
-          bMenuHotKeyShift = menuHotKey.Contains("SHIFT");
-          bMenuHotKeyCtrl = menuHotKey.Contains("CTRL");
-          bMenuHotKeyAlt = menuHotKey.Contains("ALT");
+        bMenuHotKeyShift = menuHotKey.Contains("SHIFT");
+        bMenuHotKeyCtrl = menuHotKey.Contains("CTRL");
+        bMenuHotKeyAlt = menuHotKey.Contains("ALT");
 
-          if (menuHotKey.Contains("+"))
-          {
-            int pos = menuHotKey.LastIndexOf('+');
-            menuHotKey = menuHotKey.Substring(pos + 1).Trim();
-          }
-
-          _menuHotKey = (Keys)Enum.Parse(typeof(Keys), menuHotKey, true);
+        if (menuHotKey.Contains("+"))
+        {
+          int pos = menuHotKey.LastIndexOf('+');
+          menuHotKey = menuHotKey.Substring(pos + 1).Trim();
         }
+
+        _menuHotKey = (Keys)Enum.Parse(typeof(Keys), menuHotKey, true);
 
         bCheckNameSimple = reader.GetValueAsBool("Auto3DPlugin", "CheckNameSimple", true);
         bCheckNameFull = reader.GetValueAsBool("Auto3DPlugin", "CheckNameFull", true);
@@ -411,9 +400,6 @@ namespace MediaPortal.ProcessPlugins.Auto3D
 
       _run = false;
       _activeDevice.Stop();
-
-      if (bMenuMCERemote)
-        MediaPortal.Hardware.Remote.Click -= new MediaPortal.Hardware.RemoteEventHandler(OnRemoteClick);
 
       if (!bSuppressSwitchBackTo2D)
         GUIGraphicsContext.Render3DMode = GUIGraphicsContext.eRender3DMode.None;
